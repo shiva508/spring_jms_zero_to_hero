@@ -1,6 +1,7 @@
 package com.pool.configuration;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import jakarta.jms.JMSException;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class StudentpoolEmailJmsConfiguration {
 	private StudentpoolProperties studentpoolProperties;
 
 	@Bean
-	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
+	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() throws JMSException {
 		DefaultJmsListenerContainerFactory jmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
 		jmsListenerContainerFactory.setConnectionFactory(activeMQConnectionFactory());
 		jmsListenerContainerFactory.setConcurrency("1-1");
@@ -27,16 +28,16 @@ public class StudentpoolEmailJmsConfiguration {
 	}
 
 	@Bean
-	public ActiveMQConnectionFactory activeMQConnectionFactory() {
+	public ActiveMQConnectionFactory activeMQConnectionFactory() throws JMSException {
 		ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
 		activeMQConnectionFactory.setBrokerURL(studentpoolProperties.getJmsUrl());
-		activeMQConnectionFactory.setUserName(studentpoolProperties.getUserName());
+		activeMQConnectionFactory.setUser(studentpoolProperties.getUserName());
 		activeMQConnectionFactory.setPassword(studentpoolProperties.getPassword());
 		return activeMQConnectionFactory;
 	}
 	
 	@Bean
-	public JmsTemplate jmsTemplate() {
+	public JmsTemplate jmsTemplate() throws JMSException {
 		JmsTemplate jmsTemplate=new JmsTemplate();
 		jmsTemplate.setConnectionFactory(activeMQConnectionFactory());
 		jmsTemplate.setMessageConverter(jacksonJmsMessageConverter());

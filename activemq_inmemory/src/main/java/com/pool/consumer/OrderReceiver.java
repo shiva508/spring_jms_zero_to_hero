@@ -1,11 +1,10 @@
 package com.pool.consumer;
 
+import com.pool.model.Order;
+import com.pool.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-
-import com.shiva.model.Order;
-import com.shiva.repository.OrderRepository;
 
 @Component
 public class OrderReceiver {

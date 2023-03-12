@@ -1,5 +1,6 @@
 package com.pool.consumer;
 
+import com.pool.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.server.Session;
@@ -8,8 +9,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
-
-import com.shiva.model.Order;
 
 public class OrderConsumer {
 
